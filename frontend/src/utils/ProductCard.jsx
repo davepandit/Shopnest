@@ -25,13 +25,13 @@ export default function ProductCard({product}) {
           <Typography gutterBottom variant="h5" component="div" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}
           onClick={redirectToProductPage}
           >
-            {product.product_name}
+            {product.name}
           </Typography>
           <Typography variant="body2" color="text.secondary" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
-            {product.product_description}
+            {product.description}
           </Typography>
           {/* here goes the rating component */}
-          <Rating value={product.rating} text={`${product.textReviews} reviews`}/>
+          <Rating value={product.rating} text={`${product.numReviews} reviews`}/>
           <Typography variant="body2" color="text.secondary">
             Rs.{product.price}
           </Typography>
