@@ -6,27 +6,24 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Rating from '../components/rating/Rating';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function ProductCard({product}) {
-  const navigate = useNavigate()
-  const redirectToProductPage = () => {
-    navigate(`/product/${product.id}`)
-  }
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
-          image={product.image}
+          image={product.imageURL}
           alt="product image"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}
-          onClick={redirectToProductPage}
+        <Link to={`/products/${product._id}`}><Typography gutterBottom variant="h5" component="div" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}
           >
             {product.name}
-          </Typography>
+          </Typography></Link>
           <Typography variant="body2" color="text.secondary" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
             {product.description}
           </Typography>
