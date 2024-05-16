@@ -28,7 +28,7 @@ export default function ProductCard({product}) {
             {product.description}
           </Typography>
           {/* here goes the rating component */}
-          <Rating value={product.rating} text={`${product.numReviews} reviews`}/>
+          <Rating value={product.rating} text={`${product.numberOfReviews} reviews`}/>
           <Typography variant="body2" color="text.secondary">
             Rs.{product.price}
           </Typography>
