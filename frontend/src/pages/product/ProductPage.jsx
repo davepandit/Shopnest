@@ -53,7 +53,7 @@ const ProductPage = () => {
         {/* details section here */}
         <div className='flex flex-col gap-3 sm:max-w-[200px] lg:max-w-[400px] whitespace-normal'>
           <span>{product.name}</span>
-          <span><Rating value={product.rating} text={`${product.numberOfReviews} reviews`}/></span>
+          <span><Rating value={product.rating} text={`${product.numReviews} reviews`}/></span>
           <span>Price : Rs.{product.price}</span>
           <span>{product.description}</span>
 
