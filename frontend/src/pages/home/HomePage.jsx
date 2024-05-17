@@ -20,15 +20,17 @@ const HomePage = () => {
   wrapperClass="color-ring-wrapper"
   colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
   /></div>) : (error) ? (<div>{error?.data?.message || error.error}</div>): (
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center mb-28'>
             <div className='grid grig-cols-1 pl-3 pr-3 mt-7 gap-4 sm:grid-cols-3 sm:gap-6 sm:mt-11 sm:pl-11 sm:pr-11 sm:mb-11'>
                 {products.map((product , key)=>(
                     <ProductCard product={product} key={key} />
                 ))}
             </div>
             
+            
         </div>
         )}
+        
         
     </>
   )

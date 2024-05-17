@@ -6,11 +6,14 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 
 const Header = () => {
     const {cartItems} = useSelector((state)=>state.cart) 
     const [modal , setModal] = useState(false)
+    const [profileModal , setProfileModal] = useState(false)
+    const {userInfo} = useSelector((state)=>state.auth) 
     const navigate = useNavigate()
 
     //handle Modal functionality 
@@ -18,8 +21,17 @@ const Header = () => {
         setModal((prev)=>!prev)
     }
 
+    const handleProfileModal = () => {
+        setProfileModal((prev)=>!prev)
+    }
+
     const redirectToCart = () => {
         navigate('/cart')
+        setModal(false)
+    }
+
+    const redirectToSignIn = () => {
+        navigate('/signin')
         setModal(false)
     }
   return (
@@ -31,7 +43,9 @@ const Header = () => {
             />
             {modal && <div className='absolute bg-gray-700 text-white pl-2 pt-4 pr-2 pb-4 flex flex-col right-[5px] top-[70px] w-[200px] h-[250px] gap-6 z-50 justify-center items-center sm:hidden'>
                 <span onClick={redirectToCart}>Cart</span>
-                <span>SignIn</span>
+
+                {userInfo ? (<span>{userInfo.name}</span>) : (<span onClick={redirectToSignIn}>SignIn</span>)}
+                
 
             </div>}
             
@@ -43,9 +57,18 @@ const Header = () => {
                         return acc + product.qty
                     },0)}</span>) : null }
                 </div>
-                <div className='flex gap-3 items-center'>
-                    <FaUser className='text-2xl '/>
-                    <Link to='/login'><span className='text-lg font-bold'>SignIn</span></Link>
+                <div className='flex gap-3 items-center relative'>
+                    {userInfo ? (<RiArrowDropDownLine className='text-2xl '
+                    onClick={handleProfileModal}
+                    />) : (<FaUser className='text-2xl '/>)}
+                    {profileModal && (
+                        <div className='absolute bg-gray-700 text-white pl-2 pt-4 pr-2 pb-4 flex flex-col right-[0px] top-[50px] w-[200px] h-[250px] gap-6 z-50 justify-center items-center'>
+                            <span>Profile</span>
+                            <span>Logout</span>
+                        </div>
+                    )}
+                    {userInfo ? (<span>{userInfo.name}</span>) : (<Link to='/login'><span className='text-lg font-bold'>SignIn</span></Link>)}
+                    
                 </div>
             </div>
         </div>

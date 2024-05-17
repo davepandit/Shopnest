@@ -43,10 +43,11 @@ const CartPage = () => {
   
   return (
     <>
+    <div className='max-w-[2000px] mx-auto'>
       <div className='pl-11 mt-11 font-bold text-4xl'>
         Cart
       </div>
-      <div className='flex pl-11 pr-11 pt-7 pb-7 gap-24'>
+      <div className='flex pl-11 pr-11 pt-7 pb-7 gap-24 mb-24'>
         <div className='flex flex-col gap-6'>
           {/* left section  */}
           {cartItems.length == 0 ? (<div className='flex flex-col gap-11 justify-center items-center'><BsCartXFill className='text-7xl min-w-[500px] opacity-40 '/>
@@ -90,6 +91,7 @@ const CartPage = () => {
           }
           
         </div>
+      </div>
       </div>
     </>
   )
