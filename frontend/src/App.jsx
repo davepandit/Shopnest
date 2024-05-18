@@ -6,6 +6,10 @@ import ProductPage from './pages/product/ProductPage'
 import { Routes , Route } from 'react-router-dom'
 import CartPage from './pages/cart/CartPage'
 import LoginPage from './pages/login/LoginPage'
+import RegisterPage from './pages/register/RegisterPage'
+import ShippingPage from './pages/shipping/ShippingPage'
+import PaymentPage from './pages/payment/PaymentPage'
+import PrivateRoute from './components/private/PrivateRoute'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,6 +24,11 @@ function App() {
         <Route path='/products/:id' element={<ProductPage />}/>
         <Route path='/cart' element={<CartPage />}/>
         <Route path='/login' element={<LoginPage />}/>
+        <Route path='/register' element={<RegisterPage />}/>
+        <Route path='' element={<PrivateRoute />}>
+          <Route path='/shipping' element={<ShippingPage />}/>
+          <Route path='/payment' element={<PaymentPage />}/>
+        </Route>
       </Routes>
       <Footer />
       <ToastContainer />

@@ -3,10 +3,13 @@ import { IoIosCart } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useLogoutMutation } from '../../../slice/user';
+import { removeCredentials } from '../../../slice/auth';
+import { toast } from 'react-toastify';
 
 
 const Header = () => {
@@ -14,7 +17,9 @@ const Header = () => {
     const [modal , setModal] = useState(false)
     const [profileModal , setProfileModal] = useState(false)
     const {userInfo} = useSelector((state)=>state.auth) 
+    const [logout , {isLoading}] = useLogoutMutation()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     //handle Modal functionality 
     const handleModal = () =>{
@@ -23,6 +28,18 @@ const Header = () => {
 
     const handleProfileModal = () => {
         setProfileModal((prev)=>!prev)
+    }
+    const handleLogout = async() => {
+        try {
+            const res = await logout().unwrap()
+            console.log(res)
+            dispatch(removeCredentials())
+            toast.success(res.mssg)
+            navigate('/login')
+            setProfileModal(false)
+        } catch (error) {
+            toast.error('Something went wrong')
+        }
     }
 
     const redirectToCart = () => {
@@ -64,7 +81,7 @@ const Header = () => {
                     {profileModal && (
                         <div className='absolute bg-gray-700 text-white pl-2 pt-4 pr-2 pb-4 flex flex-col right-[0px] top-[50px] w-[200px] h-[250px] gap-6 z-50 justify-center items-center'>
                             <span>Profile</span>
-                            <span>Logout</span>
+                            <span onClick={handleLogout}>Logout</span>
                         </div>
                     )}
                     {userInfo ? (<span>{userInfo.name}</span>) : (<Link to='/login'><span className='text-lg font-bold'>SignIn</span></Link>)}
