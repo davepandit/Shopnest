@@ -5,6 +5,7 @@ import products from './data/data.js';
 import connectToDatabase from './config/db.js';
 import ProdcutRouter from './routes/products.routes.js'
 import UserRouter from './routes/users.routes.js'
+import OrderRouter from './routes/orders.routes.js'
 import cookieParser from 'cookie-parser';
 
 const port = process.env.PORT
@@ -25,6 +26,7 @@ app.get('/' , (req , res)=>{
 
 app.use('/api/products' , ProdcutRouter)
 app.use('/api/users' , UserRouter)
+app.use('/api/orders' , OrderRouter)
 
 app.listen(port , ()=>{
     console.log(`Server is running at port ${port} 🪛`)

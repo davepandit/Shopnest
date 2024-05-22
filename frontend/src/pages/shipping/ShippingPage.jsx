@@ -32,7 +32,7 @@ const ShippingPage = () => {
           <img src={shippingImg} alt="login page" className='w-[600px] h-full bg-center bg-no-repeat bg-cover hidden lg:block 2xl:w-[900px]'/>
         </div>
           {/* right section  */}
-          <div className='sm:w-[600px] h-full flex flex-col pt-24 justify-center '>
+          <div className='sm:w-[600px] h-full flex flex-col pt-11 pl-7 pr-7 sm:pl-0 sm:pr-0 sm:pt-24 justify-center '>
           <div className='flex justify-center gap-6 mb-11'><CheckoutStatus step1 step2 /> </div>
           <div className=' text-center text-2xl font-bold'>Shipping Details form</div>
           <div className='flex flex-col gap-11 justify-center items-center mt-7 pl-11 pr-11 mb-11'>
