@@ -4,8 +4,10 @@ import {addOrderItems,
     getOrderById,
     updateOrderToPaid,
     updateOrderToDelivered,
-    getOrders} from '../controllers/orders.controllers.js'
+    getOrders , checkout , paymentVerification} from '../controllers/orders.controllers.js'
 import { adminCheck , validateToken } from '../middlewares/auth.middleware.js'
+
+
 
 const router = express.Router()
 
@@ -15,5 +17,7 @@ router.get('/mine' , validateToken , getMyOrders)
 router.get('/:id' , validateToken , getOrderById)
 router.put('/:id/pay' , validateToken , updateOrderToPaid)
 router.put('/:id/deliver' , validateToken , adminCheck , updateOrderToDelivered)
+router.post('/checkout' , validateToken , checkout)
+router.post('/paymentverification' , validateToken , paymentVerification)
 
 export default router

@@ -4,12 +4,64 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useGetOrderDetailsQuery } from '../../../slice/order';
 import {ColorRing} from 'react-loader-spinner'
+import { useNavigate } from 'react-router-dom';
+import { useCheckoutMutation } from '../../../slice/order';
+import { useGetRazorpayKeyQuery } from '../../../slice/order';
 
 
 const OrderPage = () => {
+  const navigate = useNavigate()
+  const [checkout , {isLoading:checkoutLoading}] = useCheckoutMutation()
+  const {data:key , isLoading:keyLoading} = useGetRazorpayKeyQuery()
   const {id : orderId} = useParams()
   const cart = useSelector((state)=>state.cart)
   const {data:order , isLoading , refetch , error} = useGetOrderDetailsQuery(orderId)
+  
+  const navigateToProductScreen = (id) => {
+    navigate(`/products/${id}`)
+  }
+  const checkoutHandler = async(amount) => {
+    
+    const response = await checkout(amount).unwrap()
+    console.log('Response coming from orders Page:' , response)
+    if(keyLoading){
+      console.log('..Loading...')
+    }else{
+      console.log('key:' , key)
+    }
+    console.log('razorpayId:' , key.razorpayId)
+    console.log(window)
+    
+    
+    // render the razorpay modal 
+    const options = {
+      key: key.razorpayId,
+      amount: response.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "Dave pandit",
+      description: "Test Transaction",
+      image: "https://avatars.githubusercontent.com/u/145253619?v=4",
+      order_id: response.id, 
+      callback_url: "http://localhost:8000/api/orders/paymentverification",
+      prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9000090000"
+      },
+      notes: {
+          "address": "Razorpay Corporate Office"
+      },
+      theme: {
+          "color": "#3399cc"
+      }
+  };
+  const razor = new window.Razorpay(options);
+      razor.open();
+  }
+
+  
+  
+  
   return isLoading ? (<div className='flex justify-center items-center h-screen'><ColorRing
   visible={true}
   height="80"
@@ -46,7 +98,7 @@ const OrderPage = () => {
               <div className='flex gap-6 items-center'>
                 <div className='flex gap-2 items-center min-w-[250px] md:w-[100px] lg:min-w-[500px]'>
                   <img src={product.imageURL} alt={product.name} className='w-[100px] h-[100px]'/>
-                  <span lassName='whitespace-normal hover:underline hover:cursor-pointer'>{product.name}</span>
+                  <span className='whitespace-normal hover:underline hover:cursor-pointer' onClick={()=>navigateToProductScreen(product.product)}>{product.name}</span>
                 </div>
                 <span>
                   {product.qty} x Rs.{product.price} = Rs.{(product.qty*product.price).toFixed(2)}
@@ -70,6 +122,11 @@ const OrderPage = () => {
               <span>Total:</span>
               <span>Rs.{cart.totalPrice}</span>
             </div>
+            {!order.isPaid && (
+              <div className='flex justify-center'>
+              <button className='text-lg font-bold bg-gray-700 text-white hover:opacity-75 pl-4 pr-4 pt-2 pb-2' onClick={()=>checkoutHandler(cart.totalPrice)}>Pay Now</button>
+            </div>
+            )}
         </div>
     </div>
     
