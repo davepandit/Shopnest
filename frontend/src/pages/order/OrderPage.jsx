@@ -11,6 +11,7 @@ import { useGetRazorpayKeyQuery } from '../../../slice/order';
 
 const OrderPage = () => {
   const navigate = useNavigate()
+  const {userInfo} = useSelector((state)=>state.auth)
   const [checkout , {isLoading:checkoutLoading}] = useCheckoutMutation()
   const {data:key , isLoading:keyLoading} = useGetRazorpayKeyQuery()
   const {id : orderId} = useParams()
@@ -38,14 +39,14 @@ const OrderPage = () => {
       key: key.razorpayId,
       amount: response.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: "INR",
-      name: "Dave pandit",
+      name: "Dave Pandit",
       description: "Test Transaction",
       image: "https://avatars.githubusercontent.com/u/145253619?v=4",
       order_id: response.id, 
       callback_url: `http://localhost:8000/api/orders/paymentverification/${orderId}`,
       prefill: {
-          name: "Gaurav Kumar",
-          email: "gaurav.kumar@example.com",
+          name: userInfo.name,
+          email: userInfo.email,
           contact: "9000090000"
       },
       notes: {

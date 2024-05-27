@@ -51,6 +51,12 @@ const Header = () => {
         navigate('/signin')
         setModal(false)
     }
+    
+
+    const handleRedirectToUpdateProfile = () => {
+        navigate('/updateprofile')
+        setProfileModal(false)
+    }
   return (
     <>
         <div className='flex justify-between sm:pl-11 sm:pr-11 max-w-[2000px] bg-gray-700 text-white mx-auto pt-4 pb-4 items-center pl-7 pr-7 w-full'>
@@ -80,7 +86,7 @@ const Header = () => {
                     />) : (<FaUser className='text-2xl '/>)}
                     {profileModal && (
                         <div className='absolute bg-gray-700 text-white pl-2 pt-4 pr-2 pb-4 flex flex-col right-[0px] top-[50px] w-[200px] h-[250px] gap-6 z-50 justify-center items-center'>
-                            <span>Profile</span>
+                            <span onClick={handleRedirectToUpdateProfile}>Profile</span>
                             <span onClick={handleLogout}>Logout</span>
                         </div>
                     )}

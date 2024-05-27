@@ -29,9 +29,16 @@ export const orderSlice = apiSlice.injectEndpoints({
                 url:'/api/getkey',
                 method:'GET'
             })
+        }),
+        getOrders:builder.query({
+            query:()=>({
+                url:`${ORDERS_URL}/mine`,
+                method:"GET"
+            }),
+            keepUnusedDataFor: 5
         })
     })
 })
 
 
-export const {useCreateOrderMutation , useGetOrderDetailsQuery , useCheckoutMutation , useGetRazorpayKeyQuery} = orderSlice
+export const {useCreateOrderMutation , useGetOrderDetailsQuery , useCheckoutMutation , useGetRazorpayKeyQuery , useGetOrdersQuery} = orderSlice
