@@ -18,6 +18,6 @@ router.get('/:id' , validateToken , getOrderById)
 router.put('/:id/pay' , validateToken , updateOrderToPaid)
 router.put('/:id/deliver' , validateToken , adminCheck , updateOrderToDelivered)
 router.post('/checkout' , validateToken , checkout)
-router.post('/paymentverification' , validateToken , paymentVerification)
+router.post('/paymentverification/:id' , validateToken , paymentVerification)
 
 export default router

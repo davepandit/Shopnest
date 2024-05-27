@@ -4,7 +4,7 @@ import { updateCart } from "../src/utils/cart";
 
 
 
-const initialState = localStorage.getItem('cart')?JSON.parse(localStorage.getItem('cart')):{cartItems:[] , shippingPrice:0 , itemsPrice:0 , totalPrice:0 ,  shippingAddress: {}, paymentMethod: 'PayPal'}
+const initialState = localStorage.getItem('cart')?JSON.parse(localStorage.getItem('cart')):{cartItems:[] , shippingPrice:0 , itemsPrice:0 , totalPrice:0 ,  shippingAddress: {}, paymentMethod: 'Razorpay'}
 const cartSlice = createSlice({
     name: 'cart',
     initialState,

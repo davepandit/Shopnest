@@ -36,11 +36,21 @@ const PaymentPage = () => {
                 <input type="radio" id='payments' name='paymentMethod' value={paymentMethod} onChange={(e)=>{
                     return setPaymentMethod(e.target.value)
                 }}/>
-                <label htmlFor="payments">Paypal or Credit Card</label>
+                <label htmlFor="payments">Paypal or Credit Card(currently not available)</label>
+            </div>
+            <div>
+                <input type="radio" id='payments' name='paymentMethod' value={paymentMethod} onChange={(e)=>{
+                    return setPaymentMethod(e.target.value)
+                }}/>
+                <label htmlFor="payments">Razorpay</label>
             </div>
         </div>
         <div className='justify-center flex  mt-11'>
             <button className='text-lg font-bold bg-gray-700 text-white hover:opacity-75 pl-4 pr-4 pt-2 pb-2'>Continue</button>
+        </div>
+        <div className='mt-11 text-center'>
+            *If payment method not selected then by default it is Razorpay
+
         </div>
         </form>
     </>

@@ -23,6 +23,7 @@ export const checkout = async(req , res) => {
 export const paymentVerification = async(req , res) => {
     try {
         console.log(req.body)
+        const {id} = req.params
         const {razorpay_payment_id , razorpay_order_id , razorpay_signature } = req.body
 
         const body =  razorpay_order_id + "|" + razorpay_payment_id 
@@ -42,7 +43,22 @@ export const paymentVerification = async(req , res) => {
 
         //   })
         //   console.log(createdDoc)
-          res.redirect(`http://localhost:5173/paymentsuccess?reference=${razorpay_payment_id}`)
+        const order = await Order.findById(id)
+
+        if(order){
+            order.isPaid = true
+            order.paidAt = Date.now()
+            order.paymentResult = {
+                razorpay_payment_id : razorpay_payment_id,
+                razorpay_order_id : razorpay_order_id,
+                razorpay_signature : razorpay_signature
+            }
+
+            const updatedOrder = await order.save()
+            // res.status(200).json(updatedOrder);
+
+        }
+          res.redirect(`http://localhost:5173/order/${id}`)
 
         }
         else{

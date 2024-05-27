@@ -42,7 +42,7 @@ const OrderPage = () => {
       description: "Test Transaction",
       image: "https://avatars.githubusercontent.com/u/145253619?v=4",
       order_id: response.id, 
-      callback_url: "http://localhost:8000/api/orders/paymentverification",
+      callback_url: `http://localhost:8000/api/orders/paymentverification/${orderId}`,
       prefill: {
           name: "Gaurav Kumar",
           email: "gaurav.kumar@example.com",
