@@ -140,7 +140,7 @@ const UpdateProfile = () => {
                           <tr>
                             <td className='px-2 py-4 whitespace-nowrap'>{order._id}</td>
                             <td className='px-2 py-4 whitespace-nowrap'>{order.createdAt.substring(0, 10)}</td>
-                            <td className='px-2 py-4 whitespace-nowrap'>{order.totalPrice}</td>
+                            <td className='px-2 py-4 whitespace-nowrap'>Rs.{order.totalPrice}</td>
                             <td className='px-2 py-4 whitespace-nowrap'>
                             {order.isPaid ? (
                               order.paidAt.substring(0, 10)

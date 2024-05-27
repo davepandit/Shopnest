@@ -7,6 +7,7 @@ import {ColorRing} from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom';
 import { useCheckoutMutation } from '../../../slice/order';
 import { useGetRazorpayKeyQuery } from '../../../slice/order';
+import { useDeliverOrderMutation } from '../../../slice/order';
 
 
 const OrderPage = () => {
@@ -17,6 +18,7 @@ const OrderPage = () => {
   const {id : orderId} = useParams()
   const cart = useSelector((state)=>state.cart)
   const {data:order , isLoading , refetch , error} = useGetOrderDetailsQuery(orderId)
+  const [deliverOrder , {isLoading:deliverLoading}] = useDeliverOrderMutation()
   
   const navigateToProductScreen = (id) => {
     navigate(`/products/${id}`)
@@ -58,6 +60,21 @@ const OrderPage = () => {
   };
   const razor = new window.Razorpay(options);
       razor.open();
+  }
+
+
+  const handleMarkasDelivered = async() => {
+    try {
+      await deliverOrder(orderId).unwrap()
+      refetch()
+      toast.success("Order delivered" ,{
+        autoClose: 2000
+      })
+    } catch (error) {
+      toast.error(error.message , {
+        autoClose:2000
+      })
+    }
   }
 
   
@@ -113,21 +130,38 @@ const OrderPage = () => {
             <span className='text-gray-500 font-bold text-3xl'>Order Summary</span>
             <div className='flex justify-between'>
               <span>Items:</span>
-              <span>Rs.{cart.itemsPrice}</span>
+              <span>Rs.{order.itemsPrice}</span>
             </div>
             <div className='flex justify-between'>
               <span>Shipping:</span>
-              <span>Rs.{cart.shippingPrice}</span>
+              <span>Rs.{order.shippingPrice}</span>
             </div>
             <div className='flex justify-between'>
               <span>Total:</span>
-              <span>Rs.{cart.totalPrice}</span>
+              <span>Rs.{order.totalPrice}</span>
             </div>
             {!order.isPaid && (
               <div className='flex justify-center'>
-              <button className='text-lg font-bold bg-gray-700 text-white hover:opacity-75 pl-4 pr-4 pt-2 pb-2' onClick={()=>checkoutHandler(cart.totalPrice)}>Pay Now</button>
-            </div>
+                <button className='text-lg font-bold bg-gray-700 text-white hover:opacity-75 pl-4 pr-4 pt-2 pb-2' onClick={()=>checkoutHandler(order.totalPrice)}>Pay Now</button>
+              </div>
             )}
+
+            {deliverLoading && (
+              <div className='flex justify-center items-center h-screen'><ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+              /></div>
+            )}
+            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              <div className='flex justify-center'>
+                <button className='text-lg font-bold bg-gray-700 text-white hover:opacity-75 pl-4 pr-4 pt-2 pb-2' onClick={handleMarkasDelivered}>Mark as delivered</button>
+              </div>
+            ) }
         </div>
     </div>
     

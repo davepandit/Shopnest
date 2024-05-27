@@ -26,6 +26,7 @@ const Header = () => {
         setModal((prev)=>!prev)
     }
 
+    // for profile 
     const handleProfileModal = () => {
         setProfileModal((prev)=>!prev)
     }
@@ -56,6 +57,12 @@ const Header = () => {
     const handleRedirectToUpdateProfile = () => {
         navigate('/updateprofile')
         setProfileModal(false)
+        setModal(false)
+
+    }
+    const handleRedirectToOrderList = () => {
+        navigate('/admin/orderlist')
+        setProfileModal(false)
     }
   return (
     <>
@@ -67,7 +74,15 @@ const Header = () => {
             {modal && <div className='absolute bg-gray-700 text-white pl-2 pt-4 pr-2 pb-4 flex flex-col right-[5px] top-[70px] w-[200px] h-[250px] gap-6 z-50 justify-center items-center sm:hidden'>
                 <span onClick={redirectToCart}>Cart</span>
 
-                {userInfo ? (<span>{userInfo.name}</span>) : (<span onClick={redirectToSignIn}>SignIn</span>)}
+                {userInfo ? (<span onClick={handleRedirectToUpdateProfile}>{userInfo.name}</span>) : (<span onClick={redirectToSignIn}>SignIn</span>)}
+
+                {userInfo.isAdmin && 
+                    <div className='flex flex-col gap-6 justify-center items-center'>
+                        <span onClick={handleRedirectToOrderList}>OrderList</span>
+                        <span>Products</span>
+                        <span>Users</span>
+                    </div>
+                }  
                 
 
             </div>}
@@ -88,6 +103,13 @@ const Header = () => {
                         <div className='absolute bg-gray-700 text-white pl-2 pt-4 pr-2 pb-4 flex flex-col right-[0px] top-[50px] w-[200px] h-[250px] gap-6 z-50 justify-center items-center'>
                             <span onClick={handleRedirectToUpdateProfile}>Profile</span>
                             <span onClick={handleLogout}>Logout</span>
+                            {userInfo.isAdmin && 
+                            <div className='flex flex-col gap-6 justify-center items-center'>
+                                <span onClick={handleRedirectToOrderList}>OrderList</span>
+                                <span>Products</span>
+                                <span>Users</span>
+                            </div>
+                            }                            
                         </div>
                     )}
                     {userInfo ? (<span>{userInfo.name}</span>) : (<Link to='/login'><span className='text-lg font-bold'>SignIn</span></Link>)}

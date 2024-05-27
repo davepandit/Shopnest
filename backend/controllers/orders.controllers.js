@@ -1,6 +1,7 @@
 import Order from "../models/orders.models.js";
 import { instance } from "../index.js";
 import crypto from 'crypto';
+import { error } from "console";
 
 
 
@@ -131,10 +132,25 @@ export const updateOrderToPaid = async(req , res) => {
     res.send('updated')
 }
 
-export const updateOrderToDelivered = (req , res) => {
-    res.send('Update the order to be delivered')
+export const updateOrderToDelivered = async(req , res) => {
+    try {
+        const order = await Order.findById(req.params.id)
+        if(order){
+            order.isDelivered = true,
+            order.deliveredAt = Date.now()
+
+            const updatedOrder = await order.save()
+
+            res.status(200).json(updatedOrder)
+        }else{
+            res.status(400).json({error:'Couldn\'t find order'})
+        }
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
 }
 
-export const getOrders = (req , res) => {
-    res.send('Get orders')
+export const getOrders = async(req , res) => {
+    const orders = await Order.find({}).populate('user' , 'id name')
+    res.status(200).json(orders)
 }
