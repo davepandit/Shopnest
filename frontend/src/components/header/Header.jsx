@@ -63,15 +63,19 @@ const Header = () => {
     const handleRedirectToOrderList = () => {
         navigate('/admin/orderlist')
         setProfileModal(false)
+        setModal(false)
     }
 
     const handleRedirectToProductsPage = () => {
         navigate('/admin/productlist')
         setProfileModal(false)
+        setModal(false)
     }
 
     const handleRedirectToUsersPage = () => {
-       navigate('/')
+       navigate('/admin/userlist')
+       setModal(false)
+       setProfileModal(false)
     } 
   return (
     <>
@@ -88,8 +92,8 @@ const Header = () => {
                 {userInfo.isAdmin && 
                     <div className='flex flex-col gap-6 justify-center items-center'>
                         <span onClick={handleRedirectToOrderList}>OrderList</span>
-                        <span>Products</span>
-                        <span>Users</span>
+                        <span onClick={handleRedirectToProductsPage}>Products</span>
+                        <span onClick={handleRedirectToUsersPage}>Users</span>
                     </div>
                 }  
                 

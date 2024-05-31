@@ -17,6 +17,7 @@ import AdminRoute from './components/private/AdminRoute'
 import OrderList from './pages/orderListForAdmin/OrderList'
 import ProductForAdmin from './pages/productListForAdmin/ProductForAdmin'
 import ProductEditForAdmin from './pages/productEditForAdmin/ProductEditForAdmin'
+import UsersPage from './pages/usersListForAdmin/UsersPage'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -47,6 +48,7 @@ function App() {
           <Route path='/admin/orderlist' element={<OrderList />}/>
           <Route path='/admin/productlist' element={<ProductForAdmin />}/>
           <Route path='/admin/product/:id/edit' element={<ProductEditForAdmin />}/>
+          <Route path='/admin/userlist' element={<UsersPage />}/>
         </Route>
       </Routes>
       <Footer />
