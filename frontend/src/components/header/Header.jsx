@@ -64,6 +64,15 @@ const Header = () => {
         navigate('/admin/orderlist')
         setProfileModal(false)
     }
+
+    const handleRedirectToProductsPage = () => {
+        navigate('/admin/productlist')
+        setProfileModal(false)
+    }
+
+    const handleRedirectToUsersPage = () => {
+       navigate('/')
+    } 
   return (
     <>
         <div className='flex justify-between sm:pl-11 sm:pr-11 max-w-[2000px] bg-gray-700 text-white mx-auto pt-4 pb-4 items-center pl-7 pr-7 w-full'>
@@ -106,8 +115,8 @@ const Header = () => {
                             {userInfo.isAdmin && 
                             <div className='flex flex-col gap-6 justify-center items-center'>
                                 <span onClick={handleRedirectToOrderList}>OrderList</span>
-                                <span>Products</span>
-                                <span>Users</span>
+                                <span onClick={handleRedirectToProductsPage}>Products</span>
+                                <span onClick={handleRedirectToUsersPage}>Users</span>
                             </div>
                             }                            
                         </div>

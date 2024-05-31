@@ -6,8 +6,10 @@ import connectToDatabase from './config/db.js';
 import ProdcutRouter from './routes/products.routes.js'
 import UserRouter from './routes/users.routes.js'
 import OrderRouter from './routes/orders.routes.js'
+import uploadRouter from './routes/upload.routes.js'
 import cookieParser from 'cookie-parser';
 import Razorpay from 'razorpay';
+import path from 'path'
 
 const port = process.env.PORT
 
@@ -16,10 +18,14 @@ connectToDatabase()
 
 const app = express()
 
+// setting up the current directory because in modulejs __dirname is not available 
+export const __dirname = path.resolve()
+
 //predefined middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
+app.use('/api/uploads' , express.static(path.resolve(__dirname , 'public/images')))
 
 
 
@@ -30,6 +36,7 @@ app.get('/' , (req , res)=>{
 app.use('/api/products' , ProdcutRouter)
 app.use('/api/users' , UserRouter)
 app.use('/api/orders' , OrderRouter)
+app.use('/api/upload' , uploadRouter)
 
 // razorpay instance
 export const instance = new Razorpay({

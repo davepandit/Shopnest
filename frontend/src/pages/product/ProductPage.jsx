@@ -44,7 +44,7 @@ const ProductPage = () => {
         <div className='pl-11 pr-11 mt-11 mb-11'>
           <Link to='/'><Button className='mt-11' text={'Go Back'}/></Link>
       </div>
-      <div className='flex flex-col gap-11 sm:flex-row sm:gap-6 pl-7 pr-7 sm:pl-11 sm:pr-11 sm:justify-around mb-11'>
+      <div className='flex flex-col gap-11 sm:flex-row sm:gap-6 pl-7 pr-7 sm:pl-11 sm:pr-11 sm:justify-around mb-28'>
         {/* image goes here */}
         <div className=''>
           <img src={product.imageURL} alt="product image" className='w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px]'/>

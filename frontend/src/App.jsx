@@ -15,6 +15,8 @@ import UpdateProfile from './pages/updateProfile/UpdateProfile'
 import PrivateRoute from './components/private/PrivateRoute'
 import AdminRoute from './components/private/AdminRoute'
 import OrderList from './pages/orderListForAdmin/OrderList'
+import ProductForAdmin from './pages/productListForAdmin/ProductForAdmin'
+import ProductEditForAdmin from './pages/productEditForAdmin/ProductEditForAdmin'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -43,6 +45,8 @@ function App() {
         {/* here goes the admin routes which the admin can only access  */}
         <Route path='' element={<AdminRoute />}>
           <Route path='/admin/orderlist' element={<OrderList />}/>
+          <Route path='/admin/productlist' element={<ProductForAdmin />}/>
+          <Route path='/admin/product/:id/edit' element={<ProductEditForAdmin />}/>
         </Route>
       </Routes>
       <Footer />

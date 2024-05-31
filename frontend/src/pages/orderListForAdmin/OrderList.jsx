@@ -15,7 +15,7 @@ const OrderList = () => {
   return (
     <>
       <div className='mt-11 mb-28 flex flex-col justify-center items-center'>
-        <div className='text-5xl text-center font-bold text-gray-700'>
+        <div className='text-5xl font-bold text-gray-700'>
           Orders
         </div>
         {/* here goes the table  */}
@@ -30,7 +30,7 @@ const OrderList = () => {
           colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
           /></div>
         ) : (
-        <div className=' w-[350px] overflow-x-scroll md:w-[750px] md:overflow-x-scroll lg:w-auto lg:overflow-auto'>
+        <div className='w-[350px] overflow-x-scroll md:w-[750px] md:overflow-x-scroll lg:w-auto lg:overflow-auto'>
           <table className='divide-y divide-gray-300 mt-9'>
             <thead className='bg-gray-200'>
               <tr>

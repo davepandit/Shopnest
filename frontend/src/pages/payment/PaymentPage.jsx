@@ -17,7 +17,7 @@ const PaymentPage = () => {
         }
     },[shippingAddress , navigate])
 
-    const [paymentMethod, setPaymentMethod] = useState('PayPal')
+    const [paymentMethod, setPaymentMethod] = useState('Razorpay')
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(savePaymentMethod(paymentMethod))
