@@ -169,8 +169,22 @@ export const deleteUser = async(req , res) => {
     }
 }
 
-export const getUserById = (req , res) => {
-    res.send('getUserById')
+export const getUserById = async(req , res) => {
+    try {
+        const user = await User.findById(req.params.id).select("-password")
+
+        if(user){
+            res.status(200).json(user)
+        }else{
+            res.status(404).json({
+                message:"User not found"
+            })
+        }
+    } catch (error) {
+        res.status(400).json({
+            error:error.message
+        })
+    }
 }
 
 export const updateUser = async(req , res) => {
@@ -183,7 +197,7 @@ export const updateUser = async(req , res) => {
 
             const updatedUser = await user.save();
 
-            res.json({
+            res.status(200).json({
                 _id: updatedUser._id,
                 name: updatedUser.name,
                 email: updatedUser.email,

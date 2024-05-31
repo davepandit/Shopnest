@@ -6,9 +6,12 @@ import { TiTick } from "react-icons/ti";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 
 
 const UsersPage = () => {
+
+  const navigate = useNavigate()
 
   //getting the users details
   const {data:users , isLoading , refetch , error} = useGetUsersQuery()
