@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useGetProductsQuery } from '../../../slice/products'
 import { useCreateProductMutation } from '../../../slice/products';
+import { useDeleteProductMutation } from '../../../slice/products';
 import {ColorRing} from 'react-loader-spinner'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -13,10 +14,23 @@ const ProductForAdmin = () => {
   const [price , setPrice] = useState(0)
   const {data:products , isLoading , error , refetch} = useGetProductsQuery()
   const [createProduct , {isLoading:productLoading }] = useCreateProductMutation()
+  const [deleteProduct , {isLoading:deleteLoading}] = useDeleteProductMutation()
   const navigate = useNavigate()
 
-  const deleteProduct = (id) => {
-    console.log('processing')
+  const deleteProductHandler = async(id) => {
+    if(window.confirm('Are you sure you want to delete this product?')){
+      try {
+        const res = await deleteProduct(id).unwrap()
+        toast.success(`${res.message}` , {
+          autoClose:2000
+        })
+        refetch()
+      } catch (error) {
+        toast.error('Cannot delete Product' , {
+          autoClose:2000
+        })
+      }
+    }
   }
 
   const handleCreateProduct = async () => {
@@ -47,6 +61,17 @@ const ProductForAdmin = () => {
               /></div>
           )
         }
+        {deleteLoading && (
+          <div className=''><ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          /></div>
+        )}
         {isLoading ? (<div className=''><ColorRing
               visible={true}
               height="80"
@@ -86,7 +111,7 @@ const ProductForAdmin = () => {
                         </td>
                         <td className='px-2 py-4 whitespace-nowrap flex gap-6 justify-center items-center'>
                           <FaEdit onClick={()=>(navigate(`/admin/product/${product._id}/edit`))} className='text-xl hover:opacity-55 hover:cursor-pointer'/>
-                          <MdDelete onClick={()=>deleteProduct(product._id)} className='text-xl hover:opacity-55 hover:cursor-pointer' style={{color:'red'}}/>
+                          <MdDelete onClick={()=>deleteProductHandler(product._id)} className='text-xl hover:opacity-55 hover:cursor-pointer' style={{color:'red'}}/>
                         </td>
                       </tr>
                     )

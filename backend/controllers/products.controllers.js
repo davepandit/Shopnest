@@ -69,3 +69,24 @@ export const updateProduct = async(req , res) => {
         res.status(400).json({error:error.meessage})
     }
 }
+
+export const deleteProduct = async(req , res) => {
+    const product = await Product.findById(req.params.id);
+
+    try {
+        if (product) {
+            await Product.deleteOne({ _id: product._id });
+            res.json({ message: 'Product removed' });
+          } else {
+            res.status(404).json({
+              message:"Product Not Found"
+            }
+      
+            )
+          }
+    } catch (error) {
+        res.status(400).json({
+            error:error.message
+        })
+    }
+  }
