@@ -7,12 +7,18 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
+import { useSearchParams } from 'react-router-dom';
+import Paginate from '../../components/pagination/Paginate';
+import { useSelector } from 'react-redux';
 
 
 
 const ProductForAdmin = () => {
+  const [searchParams , setSearchParams] = useSearchParams()
+  const {userInfo} = useSelector((state)=>state.auth)
+  const pageNumber = searchParams.get('pageNumber') || 1
   const [price , setPrice] = useState(0)
-  const {data:products , isLoading , error , refetch} = useGetProductsQuery()
+  const {data , isLoading , error , refetch} = useGetProductsQuery({pageNumber})
   const [createProduct , {isLoading:productLoading }] = useCreateProductMutation()
   const [deleteProduct , {isLoading:deleteLoading}] = useDeleteProductMutation()
   const navigate = useNavigate()
@@ -97,7 +103,7 @@ const ProductForAdmin = () => {
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
                 {
-                  products.map((product)=>{
+                  data.products.map((product)=>{
                     return (
                       <tr>
                         <td className='px-2 py-4 whitespace-nowrap'>{product._id}</td>
@@ -123,8 +129,14 @@ const ProductForAdmin = () => {
             <button className='text-lg font-bold bg-gray-700 text-white hover:opacity-75 pl-4 pr-4 pt-2 pb-2' onClick={handleCreateProduct}>Create a Product</button>
 
           </div>
+
+          <div className='mt-11 justify-center flex'>
+            <Paginate  pages={data.pages} isAdmin={userInfo.isAdmin}/>
+          </div>
         </div>
         ))}
+
+        
       </div>
     </>
   )

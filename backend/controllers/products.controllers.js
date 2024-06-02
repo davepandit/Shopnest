@@ -1,13 +1,24 @@
 import Product from "../models/products.models.js"
 
 export const getAllProducts = async(req , res) => {
+    const pageSize = 4
+    const page = Number(req.query.pageNumber) || 1
     try {
-        const products = await Product.find({})
-        res.status(200).json(products)
+        //counting the total number of documents
+        const count = await Product.countDocuments()
+
+        //would like to bring as many products as they are in a particular page
+        //a great challenge is when the user is in the 2nd page then he would like to see the next 2 products or whatever the pageSize is but how to query the next doc i mean simply querying would generate the same set of docs as that in the first page itself so for that there is a skip method that skips docs from the top in the collection
+        const products = await Product.find({}).limit(pageSize).skip(pageSize * (page-1))
+
+        //sending the products
+        res.status(200).json({products , page , pages:Math.ceil(count / pageSize)})
     } catch (error) {
-        res.status(400).json({error:error.message})
-        
+        res.status(400).json({
+            error:error.message
+        })
     }
+   
 }
 
 export const getSingleProduct = async(req , res) => {
