@@ -11,12 +11,18 @@ import { useLogoutMutation } from '../../../slice/user';
 import { removeCredentials } from '../../../slice/auth';
 import { toast } from 'react-toastify';
 import SearchBar from '../searchBar/SearchBar';
+import { FaSearchengin } from "react-icons/fa6";
+import { useSearchParams } from 'react-router-dom';
 
 
 const Header = () => {
     const {cartItems} = useSelector((state)=>state.cart) 
+    const [searchParams , setSearchParams] = useSearchParams()
+    const searchFromURL = searchParams.get('search') || ''
+    const [search , setSearch] = useState(searchFromURL)
     const [modal , setModal] = useState(false)
     const [profileModal , setProfileModal] = useState(false)
+    const [searchBar , setSearchBar] = useState(false)
     const {userInfo} = useSelector((state)=>state.auth) 
     const [logout , {isLoading}] = useLogoutMutation()
     const navigate = useNavigate()
@@ -78,10 +84,25 @@ const Header = () => {
        setModal(false)
        setProfileModal(false)
     } 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if(search.trim()){
+            navigate(`/?pageNumber=1&&search=${search}`)
+            setSearch('')
+            setSearchBar((prev)=>(!prev))
+        }else{
+            navigate('/')
+        }
+    }
   return (
     <>
         <div className='flex justify-between sm:pl-11 sm:pr-11 max-w-[2000px] bg-gray-700 text-white mx-auto pt-4 pb-4 items-center pl-7 pr-7 w-full'>
             <Link to='/'><div className='text-3xl font-bold hover:cursor-pointer'>SHOPNEST</div></Link>
+            <FaSearchengin className='text-2xl hover:cursor-pointer sm:hidden relative' onClick={()=>(setSearchBar((prev)=>(!prev)))}/>
+            {searchBar && <form onSubmit={handleSubmit}><div className='absolute z-50 top-[65px] bg-gray-300 flex justify-between left-0 right-0 mx-auto w-full pl-7 pr-7 pt-4 pb-4'>
+                <input type="text" className='text-black pl-3 pr-3 pt-1 pb-1 outline-none border border-gray-700' placeholder='search' value={search} onChange={(e)=>(setSearch(e.target.value))}/>
+                <button className='bg-gray-500 text-white pl-3 pr-3 pt-1 pb-1 font-bold' type='submit'>Search</button>
+                </div></form>}
             <RxHamburgerMenu className='text-2xl hover:cursor-pointer sm:hidden relative'
             onClick={handleModal}
             />

@@ -22,8 +22,8 @@ const SearchBar = () => {
     <>
         <form onSubmit={handleSubmit}>
             <div className='flex gap-3 items-center'>
-                <input type="text" className='w-[100px] md:w-[300px] lg:w-[400px] outline-none  border border-gray-700 pl-4 pr-4 pt-2 pb-2 text-black' placeholder='search' value={search} onChange={(e)=>(setSearch(e.target.value))}/>
-                <button className='text-white font-bold hover:opacity-55 bg-gray-500 pl-4 pr-4 pt-2 pb-2'>Search</button>
+                <input type="text" className='w-[50px] md:w-[150px] lg:w-[400px] outline-none  border border-gray-700 pl-4 pr-4 pt-2 pb-2 text-black' placeholder='search' value={search} onChange={(e)=>(setSearch(e.target.value))}/>
+                <button className='text-white font-bold hover:opacity-55 md:pl-2 md:pr-2 bg-gray-500 lg:pl-4 lg:pr-4 pt-2 pb-2'>Search</button>
             </div>
             
         </form>
