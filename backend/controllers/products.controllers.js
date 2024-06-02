@@ -90,3 +90,60 @@ export const deleteProduct = async(req , res) => {
         })
     }
   }
+
+
+  //create a review user will pass the rating as a number and a comment
+export const createProductReview = async(req , res) => {
+    const {rating , comment} = req.body
+
+    try {
+        const product = await Product.findById(req.params.id)
+
+        if(product){
+            const alreadyReviewed = product.reviews.find((review)=>(review.user.toString() === req.user._id))
+
+            if(alreadyReviewed){
+                res.status(400).json({
+                    message:"Product already reviewed"
+                })
+            }
+
+            const review = {
+                name: req.user.name,
+                user: req.user._id,
+                comment: comment,
+                rating: Number(rating)
+            }
+
+            //push the product review to the product document 
+            product.reviews.push(review)
+
+
+            //handling the numreviews
+            product.numReviews = product.reviews.length
+
+            //handling the product reviews eearlier that was the individual's review but this is the average product review
+            product.rating = Number(product.reviews.reduce((acc , item)=> {
+                return acc + item.review
+            } , 0)/product.reviews.length)
+
+
+            const updatedProduct = await product.save()
+
+            //send the response
+            res.status(200).json(updateProduct)
+
+            
+        }
+        else{
+            res.status(404).json({
+                message:"Resource not found"
+            })
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            error:error.message
+        })
+    }
+}
