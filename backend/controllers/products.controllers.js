@@ -1,18 +1,28 @@
 import Product from "../models/products.models.js"
 
 export const getAllProducts = async(req , res) => {
-    const pageSize = 4
+    const pageSize = 3
     const page = Number(req.query.pageNumber) || 1
+
+    //here we are creating the query object which is the keywords so here we are searching for the keyword that is coming from the params
+    const search = req.query.search
+    ? {
+        name: {
+          $regex: req.query.search,
+          $options: 'i',
+        },
+      }
+    : {};
     try {
         //counting the total number of documents
-        const count = await Product.countDocuments()
+        const count = await Product.countDocuments({...search})
 
         //would like to bring as many products as they are in a particular page
         //a great challenge is when the user is in the 2nd page then he would like to see the next 2 products or whatever the pageSize is but how to query the next doc i mean simply querying would generate the same set of docs as that in the first page itself so for that there is a skip method that skips docs from the top in the collection
-        const products = await Product.find({}).limit(pageSize).skip(pageSize * (page-1))
+        const products = await Product.find({...search}).limit(pageSize).skip(pageSize * (page-1))
 
         //sending the products
-        res.status(200).json({products , page , pages:Math.ceil(count / pageSize)})
+        res.status(200).json({products , page , count , pages:Math.ceil(count / pageSize)})
     } catch (error) {
         res.status(400).json({
             error:error.message
@@ -38,7 +48,7 @@ export const createProduct = async(req , res) => {
             name: 'Sample name',
             price: 0,
             user: req.user._id,
-            imageURL: '/images/sample.jpg',
+            imageURL: '/images/sample1.jpg',
             brand: 'Sample brand',
             category: 'Sample category',
             countInStock: 0,

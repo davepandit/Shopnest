@@ -11,7 +11,8 @@ import Paginate from '../../components/pagination/Paginate.jsx'
 const HomePage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const pageNumber = searchParams.get('pageNumber') || 1
-    const {data , isLoading , isError , error } = useGetProductsQuery({pageNumber})
+    const search = searchParams.get('search') || ''
+    const {data , isLoading , isError , error } = useGetProductsQuery({pageNumber , search})
 
 
   return (
@@ -34,7 +35,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div>
-                <Paginate page={data.page} pages={data.pages} /> 
+                <Paginate page={data.page} pages={data.pages} search={search} count={data.count}/> 
                 </div>
                 
             </div>

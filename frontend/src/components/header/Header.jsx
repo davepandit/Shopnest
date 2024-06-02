@@ -10,6 +10,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { useLogoutMutation } from '../../../slice/user';
 import { removeCredentials } from '../../../slice/auth';
 import { toast } from 'react-toastify';
+import SearchBar from '../searchBar/SearchBar';
 
 
 const Header = () => {
@@ -102,6 +103,7 @@ const Header = () => {
             
             <div className='sm:flex sm:gap-6 items-center sm:hover:cursor-pointer hidden'>
                 <div className='flex gap-3 items-center'>
+                    <SearchBar />
                     <IoIosCart className='text-2xl'/>
                     <Link to='/cart'><span className='text-lg font-bold'>Cart</span></Link>
                     {cartItems.length > 0 ? (<span className='bg-green-500 text-white pt-1 pb-1 pl-3 pr-3 rounded-full font-bold'>{cartItems.reduce((acc , product)=>{

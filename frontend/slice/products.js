@@ -4,10 +4,11 @@ import { apiSlice } from "./api";
 export const productsSlice = apiSlice.injectEndpoints({
     endpoints:(builder)=>({
         getProducts: builder.query({
-            query:({pageNumber})=>({
+            query:({pageNumber , search})=>({
                 url: PRODUCTS_URL,
                 params:{
-                    pageNumber
+                    pageNumber,
+                    search
                 }
             }),
             keepUnusedFor: 5, //means the data that was cached will get flushed after 5 sec if not used
