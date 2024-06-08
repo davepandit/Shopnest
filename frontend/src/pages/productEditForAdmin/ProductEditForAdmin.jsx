@@ -75,16 +75,17 @@ const ProductEditForAdmin = () => {
     }
   }
 
+  //this is only and only to store the image on the sever 
   const handleUploadImage = async(e) => {
-    // const formData = new FormData();
-    // formData.append('image', e.target.files[0])
-    // try {
-    //   const res = await uploadProductImage(formData).unwrap();
-    //   toast.success(res.message);
-    //   setImageURL(res.imageURL);
-    // } catch (err) {
-    //   toast.error(err?.data?.message || err.error);
-    // }
+    const formData = new FormData();
+    formData.append('image', e.target.files[0])
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImageURL(res.imageURL);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
     console.log('updating.....')
   };
 

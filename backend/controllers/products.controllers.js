@@ -1,4 +1,25 @@
+import { response } from "express"
 import Product from "../models/products.models.js"
+import { uploadOnCloudinary } from "../utils/Cloudinary.js"
+
+export const uploadHandler = async(req , res) => {
+    if(req.file){
+        const imageLocalPath = req.file.path
+        const response = await uploadOnCloudinary(imageLocalPath)
+        // console.log('Here is the response from cloudinary :',response)
+        res.status(200).json({
+            message:'Image uploaded',
+            imageURL:response.url
+        })
+
+    }
+    else{
+        res.status(400).json({
+            message:"Could not upload image"
+        })
+    }
+
+}
 
 export const getAllProducts = async(req , res) => {
     const pageSize = 3
@@ -65,8 +86,9 @@ export const createProduct = async(req , res) => {
 }
 
 // edit the product 
+//here i need to use the cloudinary method and get the url that is stored in the database
 export const updateProduct = async(req , res) => {
-    const {name , price , brand , category , countInStock , imageURL , description} = req.body
+    const {name , price , brand , category , countInStock , description , imageURL} = req.body
     try {
         const product = await Product.findById(req.params.id)
 

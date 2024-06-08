@@ -2,6 +2,8 @@ import express from "express";
 import multer from "multer";
 import path from 'path'
 import { __dirname } from "../index.js";
+import { uploadHandler } from "../controllers/products.controllers.js";
+
 
 
 const router = express.Router()
@@ -43,11 +45,6 @@ function checkFileUpload (){
 const upload = multer({ storage, checkFileUpload})
 
 // creating the route for image upload 
-router.post('/', upload.single('image') , (req , res)=>{
-    res.status(200).json({
-        message:'Upload Successful',
-        imageURL:`/${req.file.path}`
-    })
-})
+router.post('/', upload.single('image'), uploadHandler)
 
 export default router
