@@ -1,7 +1,6 @@
 import Order from "../models/orders.models.js";
 import { instance } from "../index.js";
 import crypto from 'crypto';
-import { error } from "console";
 
 
 
@@ -12,7 +11,7 @@ export const checkout = async(req , res) => {
             currency: "INR",
           };
           const order = await instance.orders.create(options);
-          console.log(order)
+        //   console.log(order)
           //sending back the details added automatically by razorpay
           res.status(200).json(order)
     } catch (error) {
@@ -23,7 +22,7 @@ export const checkout = async(req , res) => {
 
 export const paymentVerification = async(req , res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const {id} = req.params
         const {razorpay_payment_id , razorpay_order_id , razorpay_signature } = req.body
 
