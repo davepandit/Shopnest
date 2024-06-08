@@ -11,6 +11,7 @@ import { addToCart } from '../../../slice/cart'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import Meta from '../../components/meta/Meta'
 
 const ProductPage = () => {
   const [qty , setQty] = useState(1)
@@ -65,7 +66,8 @@ const ProductPage = () => {
   wrapperClass="color-ring-wrapper"
   colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
   /></div>) : (error) ? (<div>{error?.data?.message || error.error}</div>) : (<>
-        <div className='pl-11 pr-11 mt-11 mb-11'>
+      <Meta title={product.name}/>
+      <div className='pl-11 pr-11 mt-11 mb-11'>
           <Link to='/'><Button className='mt-11' text={'Go Back'}/></Link>
       </div>
       <div className='mb-28'>

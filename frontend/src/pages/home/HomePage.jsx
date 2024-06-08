@@ -5,6 +5,7 @@ import { useGetProductsQuery } from '../../../slice/products.js'
 import {ColorRing} from 'react-loader-spinner'
 import { useSearchParams } from 'react-router-dom'
 import Paginate from '../../components/pagination/Paginate.jsx'
+import Meta from '../../components/meta/Meta.jsx'
 
 
 
@@ -27,6 +28,7 @@ const HomePage = () => {
             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
             /></div>) : (error) ? (<div>{error?.data?.message || error.error}</div>): (
             <div className='flex flex-col gap-3 items-center justify-center mb-28'>
+                <Meta title='Home'/>
                 <div className='flex justify-center items-center'>
                     <div className='grid grig-cols-1 pl-3 pr-3 mt-7 gap-4 sm:grid-cols-3 sm:gap-6 sm:mt-11 sm:pl-11 sm:pr-11 sm:mb-11'>
                         {data.products.map((product , key)=>(

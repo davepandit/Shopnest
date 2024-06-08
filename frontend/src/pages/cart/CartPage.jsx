@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { removeFromCart } from '../../../slice/cart'
 import { BsCartXFill } from "react-icons/bs";
 import { useEffect } from 'react'
+import Meta from '../../components/meta/Meta'
 
 const CartPage = () => {
   const {cartItems} = useSelector((state)=>state.cart)
@@ -44,6 +45,7 @@ const CartPage = () => {
   return (
     <>
     <div className='max-w-[2000px] mx-auto'>
+      <Meta title='Cart'/>
       <div className='pl-11 mt-11 font-bold text-4xl'>
         Cart
       </div>

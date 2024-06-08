@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCheckoutMutation } from '../../../slice/order';
 import { useGetRazorpayKeyQuery } from '../../../slice/order';
 import { useDeliverOrderMutation } from '../../../slice/order';
+import Meta from '../../components/meta/Meta';
 
 
 const OrderPage = () => {
@@ -93,6 +94,7 @@ const OrderPage = () => {
     <div className='text-gray-500 font-bold text-center mt-7 text-xl sm:text-3xl'>
         OrderId: {order._id}
     </div>
+    <Meta title='OrderPage' />
     <div className='flex flex-col gap-5 sm:gap-0 sm:flex-row sm:justify-around mt-7 mb-28'>
         {/* left section  */}
         <div className='flex flex-col gap-5 pl-7 pr-7 sm:p-0'>

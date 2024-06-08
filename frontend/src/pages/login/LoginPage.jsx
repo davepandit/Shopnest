@@ -9,6 +9,7 @@ import { useLoginMutation } from '../../../slice/user'
 import { setCredentials } from '../../../slice/auth'
 import { toast } from 'react-toastify'
 import {ColorRing} from 'react-loader-spinner'
+import Meta from '../../components/meta/Meta'
 
 
 const LoginPage = () => {
@@ -58,6 +59,7 @@ const LoginPage = () => {
   return (
     <>
       <div className='sm:flex sm:justify-center lg:justify-between mb-24 max-w-[2000px] mx-auto'>
+        <Meta title='login' />
         {/* left section  */}
         <div>
           <img src={loginImg} alt="login page" className='w-[600px] h-full bg-center bg-no-repeat bg-cover hidden lg:block 2xl:w-[900px]'/>
